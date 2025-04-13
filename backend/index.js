@@ -1,10 +1,11 @@
 // Writing basic express boilerplate code
 // with express.json() middleware
-// const express = require('express');
-
-import { createTodo, updateTodo } from './types.js';
+import express from 'express';
+import { createTodo, updateTodo } from './types.js'; 
+import pkg from './db.js';
+const { todo } = pkg;
 const App = express();
-const {todo} = require("db.js")
+const PORT = process.env.PORT || 3000; 
 // json middleware
 App.use(express.json());
 
@@ -20,7 +21,7 @@ App.post('/todo', async (req, res)=>{
     await todo.create({
         title: payload.title,
         description: payload.description,
-        compeleted: false
+        completed: false
     })
     res.status(200).json({
         "msg":"todo created"
@@ -35,11 +36,7 @@ App.get('/todos', async (req, res)=>{
     })
 })
 
-App.delete('/todo:todoId', (req, res)=>{
-
-})
-
-App.put('/compeleted:todoId', (req, res)=>{
+App.put('/completed/:todoId', (req, res)=>{
   const updataedPayload = req.body
   const parsedPayload = updateTodo.safeParse(updataedPayload)  
   if(!parsedPayload.success){
@@ -51,6 +48,10 @@ App.put('/compeleted:todoId', (req, res)=>{
   todos.update({
     _id: req.body.id
   },{
-    compeleted: !req.body.compeleted
+    completed: true
   })
+})
+
+App.listen(PORT, ()=>{
+    console.log(`Server is running on port ${PORT}`)
 })
