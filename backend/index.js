@@ -2,10 +2,9 @@
 // with express.json() middleware
 import express from 'express';
 import { createTodo, updateTodo } from './types.js'; 
-import pkg from './db.js';
-const { todo } = pkg;
 const App = express();
 const PORT = process.env.PORT || 3000; 
+import {todos} from './db.js';
 // json middleware
 App.use(express.json());
 
@@ -30,13 +29,13 @@ App.post('/todo', async (req, res)=>{
 
 App.get('/todos', async (req, res)=>{
     // respond back with data in database  
-    const todos = await todo.find({});
+    const list = await todos.find({});
     res.status(200).json({
-        todos
+        list
     })
 })
 
-App.put('/completed/:todoId', (req, res)=>{
+App.put('/completed', async (req, res)=>{
   const updataedPayload = req.body
   const parsedPayload = updateTodo.safeParse(updataedPayload)  
   if(!parsedPayload.success){
@@ -45,10 +44,13 @@ App.put('/completed/:todoId', (req, res)=>{
     })
     return; 
   }
-  todos.update({
+  await todos.updateOne({
     _id: req.body.id
   },{
     completed: true
+  })
+  res.status(200).json({
+    "msg":"todo updated"
   })
 })
 

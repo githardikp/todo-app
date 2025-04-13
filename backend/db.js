@@ -13,8 +13,8 @@ const todoSchema = new mongoose.Schema({
     completed: Boolean
 });
 
-const todo = mongoose.model('todos', todoSchema);
+const todos = mongoose.model('todos', todoSchema);
 
-export default {
-    todo
+export {
+    todos
 };
