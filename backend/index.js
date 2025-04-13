@@ -29,4 +29,10 @@ App.delete('/todo:todoId', (req, res)=>{
 App.put('/compeleted:todoId', (req, res)=>{
   const updataedPayload = req.body
   const parsedPayload = updateTodo.safeParse(updataedPayload)  
+  if(!parsedPayload.success){
+    res.status(411).json({
+        "msg":"Incorrect format"
+    })
+    return; 
+  }
 })
