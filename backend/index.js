@@ -1,7 +1,8 @@
 // Writing basic express boilerplate code
 // with express.json() middleware
-const express = require('express');
-import { createTodo, updateTodo } from './types';
+// const express = require('express');
+
+import { createTodo, updateTodo } from './types.js';
 const App = express();
 const {todo} = require("db.js")
 // json middleware
