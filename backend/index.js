@@ -5,9 +5,11 @@ import { createTodo, updateTodo } from './types.js';
 const App = express();
 const PORT = process.env.PORT || 3000; 
 import {todos} from './db.js';
+import cors from 'cors';
 // json middleware
 App.use(express.json());
-
+App.use(cors(
+));
 App.post('/todo', async (req, res)=>{
     const payload = req.body;
     const parsedPayload = createTodo.safeParse(payload)
@@ -17,7 +19,7 @@ App.post('/todo', async (req, res)=>{
         })
         return;
     }
-    await todo.create({
+    await todos.create({
         title: payload.title,
         description: payload.description,
         completed: false
