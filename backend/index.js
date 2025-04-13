@@ -27,5 +27,6 @@ App.delete('/todo:todoId', (req, res)=>{
 })
 
 App.put('/compeleted:todoId', (req, res)=>{
-  const todoId =   
+  const updataedPayload = req.body
+  const parsedPayload = updateTodo.safeParse(updataedPayload)  
 })
